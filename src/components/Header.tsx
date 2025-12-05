@@ -1,11 +1,44 @@
-import { useState } from "react";
-import { Search, Heart, ShoppingBag, User, Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Search, Heart, ShoppingBag, User, Menu, X, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { User as SupabaseUser } from "@supabase/supabase-js";
+import { toast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    toast({
+      title: "Sesión cerrada",
+      description: "Has cerrado sesión correctamente",
+    });
+  };
 
   const navLinks = [
     { name: "Productos", href: "#productos" },
@@ -98,13 +131,52 @@ const Header = () => {
             </Button>
 
             {/* User */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-foreground hover:text-accent hover:bg-transparent"
-            >
-              <User size={20} />
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-accent hover:text-gold hover:bg-transparent"
+                  >
+                    <User size={20} />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 bg-background border-border">
+                  <div className="px-3 py-2">
+                    <p className="font-body text-sm text-muted-foreground">Conectada como</p>
+                    <p className="font-body text-sm text-foreground truncate">{user.email}</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="font-body cursor-pointer">
+                    Mi Cuenta
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="font-body cursor-pointer">
+                    Mis Pedidos
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="font-body cursor-pointer">
+                    Lista de Deseos
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    onClick={handleLogout}
+                    className="font-body cursor-pointer text-destructive focus:text-destructive"
+                  >
+                    <LogOut size={16} className="mr-2" />
+                    Cerrar Sesión
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-foreground hover:text-accent hover:bg-transparent"
+                onClick={() => navigate("/auth")}
+              >
+                <User size={20} />
+              </Button>
+            )}
           </div>
         </div>
 
@@ -122,6 +194,17 @@ const Header = () => {
                   {link.name}
                 </a>
               ))}
+              {!user && (
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    navigate("/auth");
+                  }}
+                  className="font-elegant text-xl text-accent hover:text-gold transition-colors py-2 text-left"
+                >
+                  Iniciar Sesión
+                </button>
+              )}
             </div>
           </nav>
         )}
