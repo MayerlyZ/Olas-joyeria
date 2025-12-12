@@ -1,4 +1,3 @@
-// src/app/api/auth/register/route.ts
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import bcrypt from "bcrypt";
