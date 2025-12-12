@@ -1,14 +1,13 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/auth/page": "app/auth/page.js",
-  "/api/products/route": "app/api/products/route.js",
-  "/page": "app/page.js",
-  "/api/orders/route": "app/api/orders/route.js",
-  "/api/users/route": "app/api/users/route.js",
   "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/page": "app/page.js",
+  "/favoritos/page": "app/favoritos/page.js",
+  "/api/products/route": "app/api/products/route.js",
   "/carrito/page": "app/carrito/page.js",
-  "/api/newsletter/route": "app/api/newsletter/route.js",
   "/api/earnings/route": "app/api/earnings/route.js",
-  "/admin/usuarios/page": "app/admin/usuarios/page.js",
-  "/admin/productos/page": "app/admin/productos/page.js",
+  "/api/users/route": "app/api/users/route.js",
+  "/api/orders/route": "app/api/orders/route.js",
   "/admin/page": "app/admin/page.js"
 }

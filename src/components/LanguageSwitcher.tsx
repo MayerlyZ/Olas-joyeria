@@ -1,6 +1,6 @@
 'use client';
 
-import { useI18n } from '@/hooks/use-i18n';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,7 +11,14 @@ import {
 import { Globe } from 'lucide-react';
 
 export const LanguageSwitcher = () => {
-  const { currentLanguage, changeLanguage, languages, allLanguages } = useI18n();
+  const { language, setLanguage } = useLanguage();
+
+  const languages: Record<string, string> = {
+    es: 'Español',
+    en: 'English',
+  };
+
+  const allLanguages = ['es', 'en'] as const;
 
   return (
     <DropdownMenu>
@@ -19,7 +26,7 @@ export const LanguageSwitcher = () => {
         <Button variant="ghost" size="icon" className="gap-2">
           <Globe className="w-4 h-4" />
           <span className="text-xs font-semibold uppercase">
-            {currentLanguage}
+            {language}
           </span>
         </Button>
       </DropdownMenuTrigger>
@@ -27,8 +34,8 @@ export const LanguageSwitcher = () => {
         {allLanguages.map((lang) => (
           <DropdownMenuItem
             key={lang}
-            onClick={() => changeLanguage(lang)}
-            className={currentLanguage === lang ? 'bg-accent text-white' : ''}
+            onClick={() => setLanguage(lang)}
+            className={language === lang ? 'bg-accent text-white' : ''}
           >
             {languages[lang]}
           </DropdownMenuItem>

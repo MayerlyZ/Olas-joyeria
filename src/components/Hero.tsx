@@ -1,8 +1,13 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Image */}
@@ -21,21 +26,20 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* Tagline */}
           <p className="font-elegant text-lg md:text-xl text-accent tracking-[0.3em] uppercase mb-6 opacity-0 animate-fade-in-up">
-            Joyería Artesanal
+            {t('hero.tagline')}
           </p>
 
           {/* Main Title */}
           <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-primary leading-tight mb-8 opacity-0 animate-fade-in-up delay-100">
-            Fragmentos de cielo
+            {t('hero.title')}
             <span className="block font-elegant italic text-4xl md:text-5xl lg:text-6xl mt-4 text-burgundy-light">
-              para tu piel
+              {t('hero.subtitle')}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="font-body text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-12 opacity-0 animate-fade-in-up delay-200">
-            Descubre piezas únicas que cuentan historias. Cada joya es un susurro de elegancia, 
-            diseñada para realzar tu belleza natural.
+            {t('hero.description')}
           </p>
 
           {/* CTA Buttons */}
@@ -44,7 +48,7 @@ const Hero = () => {
               size="lg" 
               className="bg-primary hover:bg-burgundy-light text-primary-foreground font-elegant text-lg tracking-wide px-8 py-6 group"
             >
-              Explorar Colección
+              {t('hero.cta')}
               <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Button>
             <Button 

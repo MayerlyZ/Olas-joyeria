@@ -1564,6 +1564,9 @@ video {
 .bg-accent {
   background-color: hsl(var(--accent));
 }
+.bg-accent\/10 {
+  background-color: hsl(var(--accent) / 0.1);
+}
 .bg-amber-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(255 251 235 / var(--tw-bg-opacity, 1));

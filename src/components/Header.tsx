@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { useSession, signOut } from "next-auth/react";
 import { useCartFavorites } from "@/hooks/use-cart-favorites";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -105,6 +106,9 @@ const Header = () => {
 
           {/* Right side icons */}
           <div className="flex items-center gap-2 absolute right-0">
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+
             {/* Favorites */}
             <Link href="/favoritos">
               <Button

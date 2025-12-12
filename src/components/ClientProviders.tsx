@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import React from "react";
 import { usePathname } from "next/navigation";
 
@@ -38,29 +39,31 @@ export function ClientProviders({ children }: { children: React.ReactNode }) {
   const [queryClient] = React.useState(() => new QueryClient());
 
   return (
-    <SessionProvider>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider>
-            <ClientLayoutContent>{children}</ClientLayoutContent>
-            <Toaster />
-            <Sonner />
-            <ToastContainer 
-              position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop={true}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </TooltipProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </SessionProvider>
+    <LanguageProvider>
+      <SessionProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <TooltipProvider>
+              <ClientLayoutContent>{children}</ClientLayoutContent>
+              <Toaster />
+              <Sonner />
+              <ToastContainer 
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </TooltipProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </SessionProvider>
+    </LanguageProvider>
   );
 }
 
