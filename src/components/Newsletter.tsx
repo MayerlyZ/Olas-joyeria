@@ -3,19 +3,56 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "react-toastify";
 
 const Newsletter = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      toast({
-        title: "¡Gracias por suscribirte!",
-        description: "Pronto recibirás nuestras novedades exclusivas.",
+    
+    if (!email) {
+      toast.error("Por favor ingresa tu correo", {
+        position: "top-right",
+        autoClose: 3000,
       });
-      setEmail("");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("¡Gracias por suscribirte! Revisa tu correo.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        setEmail("");
+      } else {
+        toast.error(data.error || "Error al suscribirse", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    } catch (error) {
+      console.error("Newsletter error:", error);
+      toast.error("Error al suscribirse. Intenta más tarde.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -23,8 +60,8 @@ const Newsletter = () => {
     <section className="py-24 bg-primary relative overflow-hidden">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-gold/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary-foreground/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-foreground/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -46,14 +83,15 @@ const Newsletter = () => {
               placeholder="Tu correo electrónico"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground placeholder:text-primary-foreground/50 font-body focus:border-gold"
+              className="bg-[#E8D9C4] border-[#E8D9C4] text-gray-900 placeholder:text-gray-500 font-body focus:border-gray-700 focus:ring-gray-700"
               required
             />
             <Button
               type="submit"
-              className="bg-gold hover:bg-gold-light text-accent-foreground font-elegant tracking-wide px-8 whitespace-nowrap"
+              disabled={loading}
+              className="bg-[#E8D9C4] hover:bg-[#ddc9b5] text-gray-900 font-elegant tracking-wide px-8 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Suscribirse
+              {loading ? "Enviando..." : "Suscribirse"}
             </Button>
           </form>
 

@@ -1,4 +1,7 @@
+"use client";
+
 import { Instagram, Facebook, Twitter } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   const footerLinks = {
@@ -13,7 +16,14 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <h3 className="font-display text-3xl text-primary mb-4">OLAS</h3>
+            <Image
+              src="/img/logo.png"
+              alt="Olas Joyería"
+              width={150}
+              height={50}
+              priority
+              className="object-contain mb-4"
+            />
             <p className="font-body text-muted-foreground mb-6 max-w-sm">
               Fragmentos de cielo para tu piel. Joyería artesanal con alma, 
               diseñada para quienes aprecian la belleza en los detalles.
@@ -21,19 +31,19 @@ const Footer = () => {
             <div className="flex gap-4">
               <a
                 href="#"
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-colors"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-accent hover:text-accent hover:border-accent transition-colors"
               >
                 <Instagram size={18} />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-colors"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-accent hover:text-accent hover:border-accent transition-colors"
               >
                 <Facebook size={18} />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-accent hover:border-accent transition-colors"
+                className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-accent hover:text-accent hover:border-accent transition-colors"
               >
                 <Twitter size={18} />
               </a>
@@ -63,7 +73,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="font-body text-sm text-muted-foreground">
-            © 2024 OLAS Joyería. Todos los derechos reservados.
+            © 2025 OLAS Joyería. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-6">
             <img

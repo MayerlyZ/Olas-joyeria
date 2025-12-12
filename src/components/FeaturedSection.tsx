@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const FeaturedSection = () => {
   return (
-    <section className="py-24 bg-champagne/50">
+    <section className="py-24 bg-cream">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-8">
           {/* Featured Card 1 */}
@@ -26,7 +26,7 @@ const FeaturedSection = () => {
               </p>
               <Button
                 variant="outline"
-                className="border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground hover:text-primary font-elegant tracking-wide group/btn"
+                className="bg-[#E8D9C4] border-[#E8D9C4] text-gray-900 hover:bg-[#ddc9b5] hover:border-[#ddc9b5] font-elegant tracking-wide group/btn"
               >
                 Descubrir
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
@@ -53,7 +53,7 @@ const FeaturedSection = () => {
                 Solo 50 piezas de cada diseño. Para quienes buscan lo verdaderamente único.
               </p>
               <Button
-                className="bg-gold hover:bg-gold-light text-accent-foreground font-elegant tracking-wide group/btn"
+                className="bg-[#E8D9C4] hover:bg-[#ddc9b5] text-gray-900 font-elegant tracking-wide group/btn"
               >
                 Ver Colección
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
